@@ -2,20 +2,22 @@
 
 ## C++ 20
 ### Core Language Features
-- Concepts
-- Ranges
-- Coroutines
 - Modules
+- Ranges
+- Concepts
+- Coroutines
 - Three-way comparison (spaceship operator)
+- Designated initializers
 
 ### Library Features
 - date and time library
 - std::format
 - std::span
+- std::jthread
 
 ## C++ 23
 ### Core Language Features
-- Deduction guides for class templates
+- Deduction guides for class templates, "deducing this" (CRTP: Curiously Recurring Template Pattern)
 - Explicit object parameters
 
 ### Library Features
@@ -27,6 +29,7 @@
 ### Core Language Features
 - Pattern matching
 - Reflection
+- Contracts
 
 
 # C++20 to C++26 Study Plan (40 Hours / 1 Month)
