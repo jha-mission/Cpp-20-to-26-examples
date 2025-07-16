@@ -1,15 +1,19 @@
 BIN=main
 
 CC=g++
-CFLAGS=-I. -std=c++2a -fmodules-ts
+CFLAGS=-I. -std=c++2a -fmodules
 
 # Link everything
-$(BIN): main.o math.o
-	$(CC) $(CFLAGS) main.o math.o -o $(BIN)
+$(BIN): main.o math.o math_impl.o
+	$(CC) $(CFLAGS) main.o math_impl.o math.o -o $(BIN)
 
 # Compile the module interface unit
 math.o: math.cxx
-	$(CC) $(CFLAGS) -c math.cxx -o math.o
+	$(CC) $(CFLAGS) -c math.cxx -c -o math.o
+
+# Compile the implementation of the module
+math_impl.o: math.cpp
+	$(CC) $(CFLAGS) -c math.cpp -o math_impl.o
 
 # Compile the main file, importing the module
 main.o: main.cpp math.o
@@ -17,21 +21,3 @@ main.o: main.cpp math.o
 
 clean:
 	rm -f *.o $(BIN)
-# ---------------- wildcards -----------------------------------------------------------
-# Example:
-#  %.o: %.c
-# 		gcc -wall -g -c $<
-# means: all .o files depend on the corresponding .c file
-#        below is the method for how to create them
-
-# -------------------- Automatic variables ----------------------------------------------
-# Example:
-# all: file1.cpp file2.cpp
-#
-# $@ : name of the rules target 							(all)
-# $^ : list of all dependencies, no duplicates		(file1.cpp file2.cpp)
-# $+ : list of all dependencies
-# $< : first dependency 									(file1.cpp)
-
-# -------------------- General Comments -------------------------------------------------
-# calling make without target parameter creates the first target in the makefile
