@@ -1,5 +1,7 @@
 // https://godbolt.org/z/TPrajoxxT
 
+// https://github.com/NVIDIA/stdexec
+
 #include <exec/static_thread_pool.hpp>
 #include <iostream>
 #include <stdexec/execution.hpp>
