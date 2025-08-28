@@ -30,26 +30,8 @@
 - Reflection
 - Contracts
 
-## 🔧 Tools & References
-
-- **Compilers**: GCC 13+, Clang 17+, MSVC 2022+
-- **Online Tools**:
-  - [Compiler Explorer](https://godbolt.org)
-  - [Wandbox](https://wandbox.org)
-- **Reference**:
-  - [cppreference.com](https://en.cppreference.com)
-  - [wg21.link](https://wg21.link)
-- **Blogs**:
-  - [Barry Revzin](https://brevzin.github.io/)
-  - [C++ Alliance](https://www.cppalliance.org/)
-- **Books**:
-  - *C++20: The Complete Guide* – Nicolai Josuttis
-  - *Programming with C++20* – Andreas Fertig
-  - *C++23 by Example* – Slobodan Dmitrović
-
----
-
-📝 **Tip**: Track your learning with a simple progress checklist or journal. Want a Notion version? Let me know!
+### Library Features
+- std::execute
 
 
 ## Build gcc-15
