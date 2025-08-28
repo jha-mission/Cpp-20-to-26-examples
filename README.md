@@ -38,25 +38,25 @@
 
 ### Install dependencies for building GCC
 
-  sudo apt install -y build-essential git make gawk flex bison libgmp-dev libmpfr-dev libmpc-dev python3 binutils perl libisl-dev libzstd-dev tar gzip bzip2
+    sudo apt install -y build-essential git make gawk flex bison libgmp-dev libmpfr-dev libmpc-dev python3 binutils perl libisl-dev libzstd-dev tar gzip bzip2
 
 ### Download GCC source code
 
-  mkdir ~/gcc-15
-  cd ~/gcc-15
-  git clone https://gcc.gnu.org/git/gcc.git gcc-15-source
-  cd gcc-15-source
-  git checkout releases/gcc-15.1.0
-  ./contrib/download_prerequisites
+    mkdir ~/gcc-15
+    cd ~/gcc-15
+    git clone https://gcc.gnu.org/git/gcc.git gcc-15-source
+    cd gcc-15-source
+    git checkout releases/gcc-15.1.0
+    ./contrib/download_prerequisites
 
 ### Configuring the Build
 
-  cd ~/gcc-15
-  mkdir gcc-15-build
-  cd gcc-15-build
-  ../gcc-15-source/configure --prefix=/opt/gcc-15 --disable-multilib --enable-languages=c,c++
+    cd ~/gcc-15
+    mkdir gcc-15-build
+    cd gcc-15-build
+    ../gcc-15-source/configure --prefix=/opt/gcc-15 --disable-multilib --enable-languages=c,c++
 
 ### Build and Install GCC
 
-  make -j$(nproc)
-  sudo make install
+    make -j$(nproc)
+    sudo make install

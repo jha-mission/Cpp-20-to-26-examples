@@ -50,12 +50,11 @@ ReturnObject my_coroutine()
 
 int main()
 {
-  auto returnObj = my_coroutine(); // The coroutine starts and prints "Hello"
+  auto returnObj = my_coroutine(); // The coroutine starts
 
-  std::cout << "after calling coroutine\n"; // Now "World" is printed
+  std::cout << "after calling coroutine\n";
 
-  returnObj.Resume(); // Resume the coroutine and print "Coroutine!"
-  returnObj.Resume(); // Resume the coroutine and print "Coroutine!"
+  returnObj.Resume(); // Resume the coroutine
 
   return 0;
 }
