@@ -1,24 +1,36 @@
-#include <iostream>
 #include <compare>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <iostream>
 
-struct Point {
-    int x, y;
+struct Person {
+    std::string name;
+    int age;
 
-    // Defaulted three-way comparison operator
-    auto operator<=>(const Point&) const = default;
+    // Order by age, then name
+    auto operator<=>(const Person& other) const {
+        return age <=> other.age;
+    }
+
+    bool operator==(const Person& other) const = default;
 };
 
 int main() {
-    Point p1{1, 2};
-    Point p2{1, 3};
 
-    if (auto cmp = (p1 <=> p2); cmp < 0) {
-        std::cout << "p1 is less than p2\n";
-    } else if (cmp > 0) {
-        std::cout << "p1 is greater than p2\n";
-    } else {
-        std::cout << "p1 is equal to p2\n";
+    std::vector<Person> people = {
+        {"Alice", 30},
+        {"Bob", 25},
+        {"Charlie", 40}
+    };
+
+    if (people[0] > people[1]) {
+        std::cout << people[0].name << " is older than " << people[1].name << "\n";
     }
 
-    return 0;
+    std::sort(people.begin(), people.end());
+
+    for (auto& p : people) {
+        std::cout << p.name << " (" << p.age << ")\n";
+    }
 }
