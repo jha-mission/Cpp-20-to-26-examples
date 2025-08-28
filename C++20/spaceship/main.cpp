@@ -20,9 +20,13 @@ int main() {
 
     std::vector<Person> people = {
         {"Alice", 30},
-        {"Bob", 25},
+        {"Alice", 25},
         {"Charlie", 40}
     };
+
+    if (people[0] != people[1]) {
+        std::cout << people[0].name << " is not equal to " << people[1].name << "\n";
+    }
 
     if (people[0] > people[1]) {
         std::cout << people[0].name << " is older than " << people[1].name << "\n";
