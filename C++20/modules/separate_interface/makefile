@@ -1,7 +1,7 @@
 BIN=main
 
 CC=g++
-CFLAGS=-I. -std=c++2a -fmodules
+CFLAGS=-I. -std=c++20 -fmodules
 
 # Build main
 $(BIN): math_interface.o math_impl.o
