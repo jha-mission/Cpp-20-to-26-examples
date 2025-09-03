@@ -7,6 +7,9 @@
 template<typename T>
 concept Integral = std::is_integral_v<T>;
 
+template<typename T>
+concept Incrementable = requires(T a) { ++a; a++; };
+
 // Use the concept to constrain a template function
 template <Integral T>
 T add(T a, T b) {
