@@ -10,16 +10,29 @@ concept Integral = std::is_integral_v<T>;
 template<typename T>
 concept Incrementable = requires(T a) { ++a; a++; };
 
+// Using a concept
+template<Incrementable T>
+T MyFun(T value);
+
+template<typename T> requires Incrementable<T>
+T MyFun(T value);
+
+template<typename T>
+T MyFun(T value)  requires Incrementable<T>;
+
+auto MyFun(Incrementable auto value);
+
+
 // Use the concept to constrain a template function
 template <Integral T>
-T add(T a, T b) {
+T Add(T a, T b) {
     return a + b;
 }
 
 //-------------------------------------------------------------------------------
 int main() {
     int x = 5, y = 10;
-    std::cout << "Sum: " << add(x, y) << std::endl;
+    std::cout << "Sum: " << Add(x, y) << std::endl;
     // Uncommenting the next lines will cause a compile error, as double is not Integral
     // double a = 1.1, b = 2.2;
     // std::cout << add(a, b) << std::endl;
