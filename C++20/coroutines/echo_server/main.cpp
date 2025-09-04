@@ -4,6 +4,7 @@
 // test with e.g.
 // nc localhost 4000 + "hello" + ENTER
 
+// based on: https://www.boost.org/doc/libs/1_86_0/doc/html/boost_asio/examples/cpp17_examples.html#boost_asio.examples.cpp17_examples.coroutines_ts_support
 #include <boost/asio/co_spawn.hpp>
 #include <boost/asio/detached.hpp>
 #include <boost/asio/io_context.hpp>
@@ -12,6 +13,7 @@
 #include <boost/asio/as_tuple.hpp>
 #include <cstdio>
 
+// this is a coroutine
 boost::asio::awaitable<void> echo(boost::asio::ip::tcp::socket socket) {
   char data[1024];
   for (;;) {
@@ -27,6 +29,7 @@ boost::asio::awaitable<void> echo(boost::asio::ip::tcp::socket socket) {
   }
 }
 
+// this is a coroutine
 boost::asio::awaitable<void> listen() {
   auto executor = co_await boost::asio::this_coro::executor;
   boost::asio::ip::tcp::acceptor acceptor(executor, {boost::asio::ip::tcp::v4(), 4000});
