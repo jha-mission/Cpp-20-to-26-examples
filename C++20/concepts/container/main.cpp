@@ -10,11 +10,13 @@ concept HasPushBack = requires(Collection c, typename Collection::value_type v) 
   c.push_back(v);
 };
 
+// This will be selected if Collection has a push_back function
 // template<HasPushBack Collection, typename T>
 // void add(Collection& collection, T value) {
 //   collection.push_back(value);
 // }
 
+// This will be selected if Collection doesn't have a push_back function
 // template<typename Collection, typename T>
 // void add(Collection& collection, T value) {
 //   collection.insert(value);
