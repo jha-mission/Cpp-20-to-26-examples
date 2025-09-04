@@ -1,3 +1,6 @@
+// Requires:
+// apt install libboost-all-dev
+
 // test with e.g.
 // nc localhost 4000 + "hello" + ENTER
 
