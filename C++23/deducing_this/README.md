@@ -32,11 +32,3 @@ Illustrates how value categories are preserved through recursive calls.
 
 ## Perfect Forwarding
 If a function templates forward its arguments without changing its lvalue or rvalue characteristics, we call it perfect forwarding.
-
-
-
-## References
-
-- [P0847R7: Deducing this](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p0847r7.html)
-- [C++23 Features](https://en.cppreference.com/w/cpp/23)
-- [lvalues, rvalues](https://www.justsoftwaresolutions.co.uk/cplusplus/core-c++-lvalues-and-rvalues.html)

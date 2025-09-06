@@ -1,26 +1,24 @@
 #include <iostream>
-#include <string>
 
-struct Person {
-    std::string name;
-    int age;
+struct Point {
+  int x, y;
 
-    // Classic member function syntax
-    void print_info() const {
-        std::cout << "Name: " << name << ", Age: " << age << '\n';
-    }
+  // Deducing this: 'auto' makes this a template on cv/ref qualifiers
+  auto operator+=(this Point& self, const Point& other) {
+    self.x += other.x;
+    self.y += other.y;
+    return self;
+  }
 
-    void set_name(std::string new_name) {
-        name = std::move(new_name);
-    }
+  void print(this const Point& self) {
+    std::cout << "(" << self.x << ", " << self.y << ")\n";
+  }
 };
 
 int main() {
-    Person p{"Alice", 30};
-    p.print_info();
+  Point p1{1, 2};
+  Point p2{3, 4};
 
-    p.set_name("Bob");
-    p.print_info();
-
-    return 0;
+  p1 += p2;
+  p1.print();  // Output: (4, 6)
 }

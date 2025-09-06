@@ -6,6 +6,6 @@ import std;
 // #include <string> -> compile error !
 
 int main() {
-  std::print("Hello, World!\n");
+  std::println("Hello, World!");
   return 0;
 }

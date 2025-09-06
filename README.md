@@ -60,3 +60,9 @@
 
     make -j$(nproc)
     sudo make install
+
+
+### Activate GCC 15
+
+    sudo update-alternatives --install /usr/bin/gcc gcc /opt/gcc-15/bin/gcc 100
+    sudo update-alternatives --install /usr/bin/g++ g++ /opt/gcc-15/bin/g++ 100
