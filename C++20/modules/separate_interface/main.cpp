@@ -1,7 +1,7 @@
-#include <iostream>
-import math;
+import <iostream>;
+import math_utils;
 
 int main() {
-    std::cout << "2 + 3 = " << add(2, 3) << std::endl;
-    return 0;
+  std::cout << "2 + 3 = " << add(2, 3) << "\n";
+  return 0;
 }

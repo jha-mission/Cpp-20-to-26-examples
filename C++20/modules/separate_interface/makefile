@@ -1,19 +1,40 @@
-BIN=main
+CXX = g++
+CXXFLAGS = -std=c++20 -fmodules
 
-CC=g++
-CFLAGS=-I. -std=c++20 -fmodules
+# Sources
+MODULE_IFACE = math_utils.ixx
+MODULE_IMPL  = math_utils.cpp
+MAIN_SRC     = main.cpp
 
-# Build main
-$(BIN): math_interface.o math_impl.o
-	$(CC) $(CFLAGS) main.cpp math_impl.o math_interface.o -o $(BIN)
+# Objects
+MODULE_IFACE_OBJ = math_utils.iface.o
+MODULE_IMPL_OBJ  = math_utils.impl.o
+MAIN_OBJ         = main.o
 
-# Compile the module interface unit
-math_interface.o: math_interface.cxx
-	$(CC) $(CFLAGS) -c math_interface.cxx -o math_interface.o
+TARGET = main
 
-# Compile the implementation of the module
-math_impl.o: math_impl.cpp math_interface.o
-	$(CC) $(CFLAGS) -c math_impl.cpp -o math_impl.o
+all: system-mods $(TARGET)
+
+# Step 0: Precompile standard library module(s)
+system-mods:
+	$(CXX) $(CXXFLAGS) -x c++-system-header iostream
+
+# Step 1: Module interface
+$(MODULE_IFACE_OBJ): $(MODULE_IFACE)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Step 2: Module implementation
+$(MODULE_IMPL_OBJ): $(MODULE_IMPL)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Step 3: Main program
+$(MAIN_OBJ): $(MAIN_SRC)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Step 4: Link everything
+$(TARGET): $(MODULE_IFACE_OBJ) $(MODULE_IMPL_OBJ) $(MAIN_OBJ)
+	$(CXX) $^ -o $@
 
 clean:
-	rm -f *.o $(BIN)
+	rm -f $(MODULE_IFACE_OBJ) $(MODULE_IMPL_OBJ) $(MAIN_OBJ) $(TARGET)
+	rm -rf gcm.cache
