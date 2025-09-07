@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream>  // if you use import <iostream> you'll have to compile the module manually (with gcc)
 import math;
 
 int main() {

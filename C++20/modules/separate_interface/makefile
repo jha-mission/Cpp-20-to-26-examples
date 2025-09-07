@@ -1,8 +1,20 @@
+# precompile standard library module
+# g++ -std=c++20 -fmodules -x c++-system-header iostream
+#
+# compile math module
+# g++ -std=c++20 -fmodules -c math_utils.ixx -o math_utils.o
+# g++ -std=c++20 -fmodules -c math_utils.cpp -o math_utils_impl.o
+#
+# compile main
+# g++ -std=c++20 -fmodules -c main.cpp -o main.o
+# link
+# g++ math_utils.o math_utils_impl.o main.o -o main
+
 CXX = g++
 CXXFLAGS = -std=c++20 -fmodules
 
 # Sources
-MODULE_IFACE = math_utils.ixx
+MODULE_IFACE = math_utils.cxx
 MODULE_IMPL  = math_utils.cpp
 MAIN_SRC     = main.cpp
 
