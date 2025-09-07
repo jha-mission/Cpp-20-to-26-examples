@@ -7,12 +7,12 @@ struct Data {
   int j;
 
   // with out this it won't compile, because set is ordered.
-  auto operator<(const Data& other) const {
-    return i < other.i || (i == other.i && j < other.j);
-  }
+  // auto operator<(const Data& other) const {
+  //   return i < other.i || (i == other.i && j < other.j);
+  // }
 
   // but now (C++20) you can do
-  // auto operator<=>(const Data& other) const = default;
+  auto operator<=>(const Data& other) const = default;
 
 };
 
