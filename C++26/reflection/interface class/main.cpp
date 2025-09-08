@@ -7,7 +7,7 @@
 struct suppress_t {} Suppress;
 
 consteval auto is_nonspecial_member_function(std::meta::info mem) {
-  return is_function(mem)  && !is_special_member_function(mem);
+  return std::meta::is_function(mem)  && !std::meta::is_special_member_function(mem);
 }
 
 consteval auto pretty_name(std::meta::info ty) -> std::string_view {
@@ -20,22 +20,22 @@ consteval auto pretty_name(std::meta::info ty) -> std::string_view {
 
 consteval auto interface(std::meta::info proto) -> std::string_view {
     static constexpr auto ctx = std::meta::access_context::unchecked();
-    auto name = std::string{ identifier_of(proto) };
+    auto name = std::string{ std::meta::identifier_of(proto) };
 
     auto ret = std::string{};
     ret += "class " + name+ " {\n"
         +  "public:\n";
-    for (auto mem : members_of(proto, ctx)) {
+    for (auto mem : std::meta::members_of(proto, ctx)) {
         if (is_nonspecial_member_function(mem)
             && (
-                annotations_of(mem).empty()
-                || type_of(annotations_of(mem)[0]) != ^^suppress_t
+                std::meta::annotations_of(mem).empty()
+                || type_of(std::meta::annotations_of(mem)[0]) != ^^suppress_t
             )
         ) {
             ret += std::string{"    virtual "} + pretty_name(return_type_of(mem))
-                +  " " + identifier_of(mem)
+                +  " " + std::meta::identifier_of(mem)
                 +  "( ";
-            for (bool first = true; auto param : parameters_of(mem)) {
+            for (bool first = true; auto param : std::meta::parameters_of(mem)) {
                 if (!first) { ret += ","; }
                 first = false;
                 ret += pretty_name( type_of(param) );
