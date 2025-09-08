@@ -31,9 +31,11 @@ boost::asio::awaitable<void> echo(boost::asio::ip::tcp::socket socket) {
 
 // this is a coroutine
 boost::asio::awaitable<void> listen() {
+  // suspend
   auto executor = co_await boost::asio::this_coro::executor;
   boost::asio::ip::tcp::acceptor acceptor(executor, {boost::asio::ip::tcp::v4(), 4000});
   for (;;) {
+    // suspend
     boost::asio::ip::tcp::socket socket = co_await acceptor.async_accept(boost::asio::use_awaitable);
     boost::asio::co_spawn(executor, echo(std::move(socket)), boost::asio::detached);
   }

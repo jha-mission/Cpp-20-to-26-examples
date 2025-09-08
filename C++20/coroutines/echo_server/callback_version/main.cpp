@@ -66,6 +66,7 @@ class server {
 
  private:
   void do_accept() {
+    // here it starts: the lambda is the callback that is called when a connection is accepted
     acceptor_.async_accept(
         [this](boost::system::error_code ec, tcp::socket socket) {
           if (!ec) {
