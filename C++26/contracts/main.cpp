@@ -1,12 +1,14 @@
-#include <iostream>
+// https://godbolt.org/z/e7chfvTTG
 
-int fun(int i)
-  pre(i >= 0)
-  post(r : r > 0) {
+#include <contracts>
+
+int fun(int i) pre(i >= 0) post(r : r > 0) {
   contract_assert(i >= 0);
   return i + 1;
 }
 
 int main() {
-  fun(-1);
+  int r = fun(-1);
+
+  return 0;
 }
