@@ -16,9 +16,9 @@ int main() {
   auto begin = stdexec::schedule(sched);
 
   stdexec::sender auto work = stdexec::when_all(
-      stdexec::then(stdexec::schedule(sched), [] { return compute_intensive(0); }),
-      stdexec::then(stdexec::schedule(sched), [] { return compute_intensive(1); }),
-      stdexec::then(stdexec::schedule(sched), [] { return compute_intensive(2); }));
+      stdexec::then(stdexec::schedule(sched), [] { return compute_intensive(2); }),
+      stdexec::then(stdexec::schedule(sched), [] { return compute_intensive(3); }),
+      stdexec::then(stdexec::schedule(sched), [] { return compute_intensive(4); }));
 
   auto [a, b, c] = stdexec::sync_wait(std::move(work)).value();
 
