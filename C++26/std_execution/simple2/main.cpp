@@ -1,3 +1,5 @@
+// https://godbolt.org/z/TPrajoxxT
+
 #include <exec/static_thread_pool.hpp>
 #include <iostream>
 #include <stdexec/execution.hpp>
