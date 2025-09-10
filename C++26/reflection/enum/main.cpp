@@ -7,12 +7,12 @@
 #include <type_traits>
 #include <utility>
 
-// #A Helper because this is interesting by itself
+// #Helper because this is interesting by itself
 template <typename E>
   requires std::is_enum_v<E>
 constexpr inline auto num_enumerators_of{std::meta::enumerators_of(^^E).size()};
 
-// #B Implementation
+// #Implementation
 template <typename E>
   requires std::is_enum_v<E>
 consteval auto get_enum_values() {
@@ -29,6 +29,7 @@ consteval auto get_enum_values() {
   return std::pair{res, names};
 }
 
+1.
 enum class Color { Transparent, Red = 2, Green, Blue = 8, Yellow };
 
 int main() {

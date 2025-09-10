@@ -23,6 +23,7 @@
 
 using boost::asio::ip::tcp;
 
+// 5. enable_shared_from_this
 class session : public std::enable_shared_from_this<session> {
  public:
   session(tcp::socket socket) : socket_(std::move(socket)) {}
@@ -31,6 +32,7 @@ class session : public std::enable_shared_from_this<session> {
 
  private:
   void do_read() {
+    // 6. keep object alive until lambda is done
     auto self(shared_from_this());
     socket_.async_read_some(
         boost::asio::buffer(data_, max_length),
@@ -60,16 +62,18 @@ class session : public std::enable_shared_from_this<session> {
 class server {
  public:
   server(boost::asio::io_context& io_context, short port)
-      : acceptor_(io_context, tcp::endpoint(tcp::v4(), port)) {
+    // 2. the acceptor connects this code to the ip_context
+    : acceptor_(io_context, tcp::endpoint(tcp::v4(), port)) {
     do_accept();
   }
 
  private:
   void do_accept() {
-    // here it starts: the lambda is the callback that is called when a connection is accepted
+    // 3. the lambda is the callback that is called when a connection is accepted
     acceptor_.async_accept(
         [this](boost::system::error_code ec, tcp::socket socket) {
           if (!ec) {
+            // 4. create a session for every connection
             std::make_shared<session>(std::move(socket))->start();
           }
 
@@ -84,6 +88,7 @@ int main(int argc, char* argv[]) {
   try {
 
     boost::asio::io_context io_context;
+    // 1. tcp::acceptor for listening for incoming connections
     server s(io_context, 4000);
     io_context.run();
 
