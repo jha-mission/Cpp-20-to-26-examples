@@ -17,6 +17,7 @@
 boost::asio::awaitable<void> echo(boost::asio::ip::tcp::socket socket) {
   char data[1024];
   for (;;) {
+    // ->suspend, go back to io_context, wake me up when data arrives
     const auto&& [ec, n] = co_await socket.async_read_some(boost::asio::buffer(data),
                                                     boost::asio::as_tuple(boost::asio::use_awaitable));
     if (ec) {
@@ -25,6 +26,7 @@ boost::asio::awaitable<void> echo(boost::asio::ip::tcp::socket socket) {
       throw boost::system::system_error(ec);
     }
 
+    // ->suspend, go back to io_context, wake me up when write is done
     co_await async_write(socket, boost::asio::buffer(data, n), boost::asio::use_awaitable);
   }
 }
@@ -35,8 +37,9 @@ boost::asio::awaitable<void> listen() {
   auto executor = co_await boost::asio::this_coro::executor;
   boost::asio::ip::tcp::acceptor acceptor(executor, {boost::asio::ip::tcp::v4(), 4000});
   for (;;) {
-    // suspend
+    // ->suspend, go back to io_context, wake me up when a client connects
     boost::asio::ip::tcp::socket socket = co_await acceptor.async_accept(boost::asio::use_awaitable);
+    // create a new coroutine for every connection
     boost::asio::co_spawn(executor, echo(std::move(socket)), boost::asio::detached);
   }
 }
@@ -46,6 +49,7 @@ int main() {
     boost::asio::io_context io_context(1);
     boost::asio::co_spawn(io_context, listen(), boost::asio::detached);
 
+    // start io_context event loop
     io_context.run();
   } catch (std::exception &e) {
     std::printf("Exception: %s\n", e.what());
