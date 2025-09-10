@@ -19,8 +19,11 @@ consteval auto get_enum_values() {
   std::array<E, num_enumerators_of<E>> res;
   std::array<std::string, num_enumerators_of<E>> names;
 
+  // 2. note that strange new loop
   template for (size_t i{}; constexpr auto& e : std::define_static_array(
+                                // 3. ^^E will create a std::meta::info value
                                 std::meta::enumerators_of(^^E))) {
+    // 3. splicer: create "code" from a reflection
     res[i] = [:e:];
     names[i] = std::meta::identifier_of(e);
     i++;
@@ -29,13 +32,14 @@ consteval auto get_enum_values() {
   return std::pair{res, names};
 }
 
-1.
+// 1. the star of the show:
 enum class Color { Transparent, Red = 2, Green, Blue = 8, Yellow };
 
 int main() {
   auto [vals, names] = get_enum_values<Color>();
 
   for (std::size_t i = 0; i < vals.size(); ++i) {
+    // 4. avoid converting an enumeration to an integer type (C++23)
     std::println("{} -> {}", std::to_underlying(vals[i]), names[i]);
   }
 
